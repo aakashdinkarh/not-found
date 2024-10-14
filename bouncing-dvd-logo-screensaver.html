@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Not Found</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #282c34;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            position: relative;
+        }
+        .bouncing-number {
+            font-size: 10rem;
+            position: absolute;
+            transition: transform 0.1s linear; /* Smooth transition for movement */
+        }
+        .content {
+            text-align: center;
+            z-index: 1;
+        }
+        a {
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="bouncing-number">404</div>
+    <div class="content">
+        <h1>Oops! The page you are looking for does not exist.</h1>
+        <a href="/">Go back to Home</a>
+    </div>
+    <script>
+        const number = document.querySelector('.bouncing-number');
+        const numberDimensions = number.getBoundingClientRect();
+        const leftMovementAllowed = numberDimensions.left - 10;
+        const rightMovementAllowed = numberDimensions.right - numberDimensions.width - 10;
+        const topMovementAllowed = numberDimensions.top - 10;
+        const bottomMovementAllowed = numberDimensions.bottom - numberDimensions.height - 10;
+
+        let posX = 0;
+        let posY = 0;
+        let velocityX = 2.5; // Horizontal speed
+        let velocityY = 2; // Vertical speed
+
+
+        function animate() {
+            posX += velocityX;
+            posY += velocityY;
+
+            // Bounce off the walls
+            if (posX <= -leftMovementAllowed || posX >= rightMovementAllowed) {
+                velocityX = -velocityX; // Reverse horizontal direction
+            }
+            if (posY <= -topMovementAllowed || posY >= bottomMovementAllowed) {
+                velocityY = -velocityY; // Reverse vertical direction
+            }
+
+            number.style.transform = `translate(${posX}px, ${posY}px)`;
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
